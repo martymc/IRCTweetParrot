@@ -2,12 +2,15 @@ var ircLib = require('irc');
 var http = require('http');
 var url = require('url');
 
-//http://api.twitter.com/1/statuses/show/199118515792392192.json^
 
+var config = {
+	ircServer: 'irc.mibbit.net',
+	ircChannel: '#testParrot',
+	botName: 'parrot'
+};
 
-
-var client = new ircLib.Client('irc.mibbit.net', 'mybot', {
-        channels: ['#kotg'],
+var client = new ircLib.Client(config.ircServer, config.botName, {
+        channels: [config.ircChannel],
 });
 
 
@@ -16,23 +19,18 @@ client.addListener('message', function (from, to, message) {
 	console.log("from: " + from);
 	console.log("to: " + to);
 	console.log("message: " + message);
-
-	if (message.substring(0, 9) == "IRCParrot")
+	
+	if (message.substring(0, config.botName.length) == config.botName)
 	{
-		//assuming we're addressed "IRCParrot: <link>
+		//assuming we're addressed "parrot: <link>
 		var twitterLink = message.substring(10, message.length);
-		console.log("Link: " + twitterLink);	
 
 		var twitterURL = new url.parse(twitterLink);
 		
 		var id = twitterURL.path.substring(twitterURL.path.lastIndexOf('/'), twitterURL.path.length);
 	
-		console.log(twitterURL.hostname, twitterURL.path);
-		console.log("id: " + id);
 		//now get from twitter
 		var apiLink = 'http://api.twitter.com/1/statuses/show/' + id + '.json';
-		console.log(apiLink); 
-
 
 		var options = {
 			host:  'api.twitter.com',
@@ -48,8 +46,10 @@ client.addListener('message', function (from, to, message) {
 			});
 
 			res.on('end', function() {
-				var obj = JSON.parse(data);
-				console.log(obj);
+				var tweet = JSON.parse(data);
+				//console.log(tweet);
+				client.say(config.ircChannel, 'Tweet from: ' + tweet.user.screen_name);
+				client.say(config.ircChannel, tweet.text);
 			});
 
 		});
@@ -57,3 +57,4 @@ client.addListener('message', function (from, to, message) {
 	}
 
 });
+
