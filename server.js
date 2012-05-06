@@ -23,7 +23,8 @@ client.addListener('message', function (from, to, message) {
 	if (message.substring(0, config.botName.length) == config.botName)
 	{
 		//assuming we're addressed "parrot: <link>
-		var twitterLink = message.substring(10, message.length);
+		//oh dear, I think this needs some regex.
+		var twitterLink = message.substring(config.botName.length + 2, message.length);
 
 		var twitterURL = new url.parse(twitterLink);
 		
