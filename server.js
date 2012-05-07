@@ -59,3 +59,8 @@ client.addListener('message', function (from, to, message) {
 
 });
 
+//don't die on exceptions..
+process.on('uncaughtException', function(err) {
+  console.log(err);
+});
+
