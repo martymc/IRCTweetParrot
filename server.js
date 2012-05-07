@@ -19,12 +19,20 @@ client.addListener('message', function (from, to, message) {
 	console.log("from: " + from);
 	console.log("to: " + to);
 	console.log("message: " + message);
-	
-	if (message.substring(0, config.botName.length) == config.botName)
-	{
-		//assuming we're addressed "parrot: <link>
-		//oh dear, I think this needs some regex.
-		var twitterLink = message.substring(config.botName.length + 2, message.length);
+  
+  // regex for name, regex for url
+	var reName = new RegExp('^' + config.botname, 'i'),
+  
+  // url regex, stolen from internets
+  reUrl = /((?:http|https):\/\/[a-z0-9\/\?=_#&%~-]+(\.[a-z0-9\/\?=_#&%~-]+)+)|(www(\.[a-z0-9\/\?=_#&%~-]+){2,})/gi,
+  
+  // check if there's any urls in message, store the result (rather than doing test then exec)
+  match = reUrl.exec(message[i]);
+  
+  // if we are addressed and there's a url to work with
+	if (reName.test(message) && match) {   
+
+		var twitterLink = match[0];  // matched string, exec returns null if it fails
 
 		var twitterURL = new url.parse(twitterLink);
 		
