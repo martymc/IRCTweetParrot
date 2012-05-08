@@ -13,6 +13,10 @@ var client = new ircLib.Client(config.ircServer, config.botName, {
         channels: [config.ircChannel],
 });
 
+client.addListener('registered', function (message) {
+        console.log('registered with the server...');
+});
+
 client.addListener('message', function (from, to, message) {
 	console.log("from: " + from);
 	console.log("to: " + to);
