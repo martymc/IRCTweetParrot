@@ -39,7 +39,7 @@ var addressedToBot = function (message)
 }
 exports.addressedToBot = addressedToBot;
 
-function getTwitterLink(message)
+var getTwitterLink = function (message)
 {
 	//assuming we're addressed "parrot: <link>
 	//oh dear, I think this needs some regex.
@@ -58,6 +58,7 @@ function getTwitterLink(message)
 	
 	return (options);
 }
+exports.getTwitterLink = getTwitterLink;
 
 function processMessage(message, options)
 {
