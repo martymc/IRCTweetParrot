@@ -32,5 +32,5 @@ Then to run the tests:
 
 	mocha
 	
-It runs all tests in the `tests` directory
+It runs all tests in the `test` directory
 
