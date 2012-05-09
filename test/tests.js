@@ -1,7 +1,7 @@
 var assert = require('assert');
 var ircParrot = require('../server.js');
 
-describe('addressedToBot', function() {
+describe('When the bot is addressed correctly', function() {
 	it('should return true', function() {
 		var result = ircParrot.addressedToBot('parrot: ');
 		assert.equal(result, true);

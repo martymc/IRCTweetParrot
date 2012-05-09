@@ -30,13 +30,14 @@ client.addListener('message', function (from, to, message) {
 	
 });
 
-function addressedToBot(message)
+var addressedToBot = function (message)
 {
 	if (message.substring(0, config.botName.length) == config.botName)
 	{
 		return true;
 	}
 }
+exports.addressedToBot = addressedToBot;
 
 function getTwitterLink(message)
 {
