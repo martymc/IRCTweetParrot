@@ -1,15 +1,12 @@
 # IRCTweetParrot
-
 ***
 
 ## An IRC bot for posting a tweets content
 
-***
-
 #### Install Dependencies
 To install IRCTweetParrots dependencies use:
 
-  npm install
+	npm install
 
 #### Edit Configuration
 In server.js edit the following lines to setup your connection:
