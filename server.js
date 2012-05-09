@@ -39,26 +39,49 @@ var addressedToBot = function (message)
 };
 exports.addressedToBot = addressedToBot;
 
-var getTwitterLink = function (message)
+var getTwitterLink = function(message)
 {
-	//assuming we're addressed "parrot: <link>
-	//oh dear, I think this needs some regex.
-	var twitterLink = message.substring(config.botName.length + 2, message.length);
+    //assuming we're addressed "parrot: <link>
+    //oh dear, I think this needs some regex.
+    var twitterLink = message.substring(config.botName.length + 2, message.length);
 
-	var twitterURL = new url.parse(twitterLink);
-	
-	var id = twitterURL.path.substring(twitterURL.path.lastIndexOf('/'), twitterURL.path.length);
-	
+    return getTwitterURLObject(twitterLink);
+};
+exports.getTwitterLink = getTwitterLink;
+
+
+var getTwitterURLObject = function (twitterLink)
+{
+	//if it isn't a twitter link, just exit.
+    //oh dear, this is a bit of a goto isn't it... :)
+    if (twitterLink.indexOf('twitter.com') == -1)
+    {
+        return;
+    }
+
+    var twitterURL = new url.parse(twitterLink);
+
+    var id = undefined;
+    if (twitterURL.path.length > 1)
+    {
+	    id = twitterURL.path.substring(twitterURL.path.lastIndexOf('/'), twitterURL.path.length);
+    }
+    else
+    {
+        //we've probably got a #! link
+        id = twitterURL.hash.substring(twitterURL.hash.lastIndexOf('/'), twitterURL.hash.length);
+    }
+
 	//generate link
 	var options = {
 		host:  'api.twitter.com',
 		port: twitterURL.port,
-		path: '/1/statuses/show/' + id + '.json' 
+		path: '/1/statuses/show' + id + '.json'
 	};
 	
 	return (options);
 };
-exports.getTwitterLink = getTwitterLink;
+exports.getTwitterURLObject = getTwitterURLObject;
 
 var processMessage = function (message, options)
 {
