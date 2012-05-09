@@ -15,8 +15,8 @@ To install IRCTweetParrots dependencies use:
 In server.js edit the following lines to setup your connection:
 
 	var config = {
-	        ircServer: 'irc.perl.org',
-	        ircChannel: '#cabal',
+	        ircServer: 'irc.mibbit.net',
+	        ircChannel: '#parrotTest',
 	        botName: 'parrot'
 	};
 	
