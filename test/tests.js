@@ -17,10 +17,18 @@ describe('When the bot is addressed incorrectly', function() {
 	});
 });
 
-
 describe('When the bot receives an empty message', function() {
 	it('should return undefined', function() {
 		var result = ircParrot.addressedToBot('');
 		assert.equal(result, undefined);
 	});
 });
+
+
+describe('When the bot receives special characters in a message', function() {
+    it('should return undefined', function() {
+        var result = ircParrot.addressedToBot('&*^%&^%&^%');
+        assert.equal(result, undefined);
+    });
+});
+

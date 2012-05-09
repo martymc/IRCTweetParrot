@@ -10,7 +10,7 @@ var config = {
 };
 
 var client = new ircLib.Client(config.ircServer, config.botName, {
-        channels: [config.ircChannel],
+        channels: [config.ircChannel]
 });
 
 client.addListener('registered', function (message) {
@@ -36,7 +36,7 @@ var addressedToBot = function (message)
 	{
 		return true;
 	}
-}
+};
 exports.addressedToBot = addressedToBot;
 
 var getTwitterLink = function (message)
@@ -57,10 +57,10 @@ var getTwitterLink = function (message)
 	};
 	
 	return (options);
-}
+};
 exports.getTwitterLink = getTwitterLink;
 
-function processMessage(message, options)
+var processMessage = function (message, options)
 {
 		var request = http.get(options, function(res) {
 			var data = '';
@@ -77,7 +77,8 @@ function processMessage(message, options)
 			});
 
 		});
-}
+};
+exports.processMessage = processMessage;
 
 //don't die on exceptions..
 process.on('uncaughtException', function(err) {
