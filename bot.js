@@ -1,6 +1,19 @@
 var ircLib = require('irc');
 var config = require('./config.js');
-var twitterReader = require('./twitterReader.js');
+var twitterReader = require('./plugins/twitterReader.js');
+
+
+//load the plugins
+var plugins = require('./plugins/plugins.js');
+
+var plugin;
+for (plugin in plugins.pluginConfig)
+{
+    console.log(plugin.pattern);
+}
+
+
+
 
 var client = new ircLib.Client(config.ircServer, config.botName, {
         channels: [config.ircChannel]

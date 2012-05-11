@@ -1,6 +1,14 @@
 var url = require('url');
-var config = require('./config.js');
+var config = require('./../config.js');
 var http = require('http');
+
+
+var receivedMessage = function(message)
+{
+    getTwitterLink(message);
+};
+exports.receivedMessage = receivedMessage;
+
 
 var getTwitterLink = function(message)
 {

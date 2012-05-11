@@ -1,6 +1,6 @@
 var assert = require('assert');
 //var should = require('should');
-var twitterReader = require('../twitterReader.js');
+var twitterReader = require('../plugins/twitterReader.js');
 
 // twitter link examples:
 // https://twitter.com/notch/status/200293374132105218
