@@ -1,5 +1,5 @@
 var assert = require('assert');
-var ircParrot = require('../server.js');
+var ircParrot = require('../bot.js');
 
 describe('When the bot is addressed correctly', function() {
 	it('should return true', function() {

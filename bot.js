@@ -3,11 +3,7 @@ var http = require('http');
 var url = require('url');
 
 
-var config = {
-	ircServer: 'irc.mibbit.net',
-	ircChannel: '#testParrot',
-	botName: 'parrot'
-};
+var config = require('./config.js');
 
 var client = new ircLib.Client(config.ircServer, config.botName, {
         channels: [config.ircChannel]

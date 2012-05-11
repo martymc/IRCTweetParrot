@@ -1,6 +1,6 @@
 var assert = require('assert');
 //var should = require('should');
-var ircParrot = require('../server.js');
+var ircParrot = require('../bot.js');
 
 // twitter link examples:
 // https://twitter.com/notch/status/200293374132105218

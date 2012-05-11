@@ -9,7 +9,7 @@ To install IRCTweetParrots dependencies use:
 	npm install
 
 #### Edit Configuration
-In server.js edit the following lines to setup your connection:
+In bot.js edit the following lines to setup your connection:
 
 	var config = {
 	        ircServer: 'irc.mibbit.net',
@@ -18,7 +18,7 @@ In server.js edit the following lines to setup your connection:
 	};
 	
 #### To run the bot
-	node server.js
+	node bot.js
 	
 #### To run the tests
 
