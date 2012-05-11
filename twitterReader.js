@@ -46,7 +46,7 @@ var getTwitterURLObject = function (twitterLink)
 };
 exports.getTwitterURLObject = getTwitterURLObject;
 
-var processMessage = function (message, options)
+var processMessage = function (message, options, client)
 {
     var request = http.get(options, function(res) {
         var data = '';

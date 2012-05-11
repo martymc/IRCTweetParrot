@@ -1,5 +1,6 @@
 var ircLib = require('irc');
 var config = require('./config.js');
+var twitterReader = require('./twitterReader.js');
 
 var client = new ircLib.Client(config.ircServer, config.botName, {
         channels: [config.ircChannel]
@@ -16,8 +17,8 @@ client.addListener('message', function (from, to, message) {
 	
 	if (addressedToBot(message))
 	{
-		var apiLink = getTwitterLink(message);
-		processMessage(message, apiLink);
+		var apiLink = twitterReader.getTwitterLink(message);
+        twitterReader.processMessage(message, apiLink, client);
 	}
 	
 });
