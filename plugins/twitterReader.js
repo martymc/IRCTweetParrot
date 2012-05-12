@@ -2,6 +2,8 @@ var url = require('url');
 var config = require('./../config.js');
 var http = require('http');
 
+exports.pattern = 'twitter.com';
+
 
 var receivedMessage = function(message)
 {

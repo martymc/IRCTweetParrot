@@ -1,23 +1,22 @@
 var ircLib = require('irc');
 var config = require('./config.js');
-var twitterReader = require('./plugins/twitterReader.js');
+//var twitterReader = require('./plugins/twitterReader.js');
 
+var fs = require('fs');
+var models = [];
 
-//load the plugins
-var plugins = require('./plugins/plugins.js');
+fs.readdir("./plugins/",function(err, files) {
+    //For the sake of the example, output the files in ./models/
+    console.log(files);
 
-var plugin;
-console.log(plugins.pluginConfig.twitterReaderPlugin.file);
+    //Add everything to the models array.
+    files.forEach(function(element){
+        models.push(require("./plugins/" + element));
+    });
 
-for (var key in plugins)
-{
-    if (plugins.hasOwnProperty(key))
-    {
-
-        console.log(key + " -> " + plugins[key]);
-    }
-}
-
+    //Profit!
+    console.log(models);
+});
 
 var client = new ircLib.Client(config.ircServer, config.botName, {
         channels: [config.ircChannel]
@@ -34,10 +33,12 @@ client.addListener('message', function (from, to, message) {
 	
 	if (addressedToBot(message))
 	{
-		var apiLink = twitterReader.getTwitterLink(message);
-        twitterReader.processMessage(message, apiLink, client);
+        if (message.indexOf(models[0].pattern) != -1)
+        {
+            var apiLink = models[0].getTwitterLink(message);
+            models[0].processMessage(message, apiLink, client);
+        }
 	}
-	
 });
 
 var addressedToBot = function (message)
