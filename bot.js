@@ -5,18 +5,25 @@ var config = require('./config.js');
 var fs = require('fs');
 var models = [];
 
-fs.readdir("./plugins/",function(err, files) {
-    //For the sake of the example, output the files in ./models/
-    console.log(files);
 
-    //Add everything to the models array.
-    files.forEach(function(element){
-        models.push(require("./plugins/" + element));
+
+var loadPlugins = function(){
+
+    fs.readdir("./plugins/",function(err, files) {
+        //For the sake of the example, output the files in ./models/
+        console.log(files);
+
+        //Add everything to the models array.
+        files.forEach(function(element){
+            models.push(require("./plugins/" + element));
+        });
+
+        //Profit!
+        console.log(models);
     });
+};
+exports.loadPlugins = loadPlugins;
 
-    //Profit!
-    console.log(models);
-});
 
 var client = new ircLib.Client(config.ircServer, config.botName, {
         channels: [config.ircChannel]
@@ -40,6 +47,19 @@ client.addListener('message', function (from, to, message) {
         }
 	}
 });
+
+
+var findPlugin = function(message)
+{
+    for (var model in models)
+    {
+        if (message.indexOf(model.pattern) > -1 )
+        {
+            return model;
+        }
+    }
+};
+exports.findPlugin = findPlugin;
 
 var addressedToBot = function (message)
 {
