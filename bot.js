@@ -7,12 +7,16 @@ var twitterReader = require('./plugins/twitterReader.js');
 var plugins = require('./plugins/plugins.js');
 
 var plugin;
-for (plugin in plugins.pluginConfig)
+console.log(plugins.pluginConfig.twitterReaderPlugin.file);
+
+for (var key in plugins)
 {
-    console.log(plugin.pattern);
+    if (plugins.hasOwnProperty(key))
+    {
+
+        console.log(key + " -> " + plugins[key]);
+    }
 }
-
-
 
 
 var client = new ircLib.Client(config.ircServer, config.botName, {

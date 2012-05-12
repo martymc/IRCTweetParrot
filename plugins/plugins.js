@@ -1,10 +1,17 @@
-//describe your bot's functionality here
+/*describe your bot's functionality here*/
 
 
-var pluginConfig = {};
+var twitterReader = {
+    file: 'plugins/twitterReader.js',
+    pattern: 'twitter.com'
+}
 
-pluginConfig.twitterReader = {};
+var pluginConfig = {
+    twitterReaderPlugin: twitterReader
+};
+
+/*pluginConfig.twitterReader = {};
 pluginConfig.twitterReader.file = 'plugins/twitterReader.js';
-pluginConfig.twitterReader.pattern = 'twitter.com';
+pluginConfig.twitterReader.pattern = 'twitter.com';*/
 
 exports.pluginConfig = pluginConfig;
