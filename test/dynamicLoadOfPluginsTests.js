@@ -19,21 +19,21 @@ var createTestPlugin = function()
 };
 
 
-var removeTestPlugin = function()
+after(function()
 {
     fs.unlink('./plugins/botPluginTest.js');
-};
+});
 
 
 describe('When a plugin is added to the plugins directory', function() {
     it('it gets dynamically loaded on startup without any code changes', function() {
-        createTestPlugin();
+        //createTestPlugin();
         ircBot.loadPlugins();
         var plugin = ircBot.findPlugin('testPattern');
-        //removeTestPlugin();
+
         assert.equal(plugin.testPlugin, 'this is the test model');
 
-
+//removeTestPlugin();
         //assert.equal(true, true);
         //var result = twitterReader.getTwitterURLObject('https://twitter.com/notch/status/200293374132105218');
         //assert.equal(result.path, '/1/statuses/show/200293374132105218.json');

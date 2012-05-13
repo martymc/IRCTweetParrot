@@ -1,5 +1,6 @@
 var assert = require('assert');
-//var should = require('should');
+var should = require('should');
+//var should = require('should.js');
 var twitterReader = require('../plugins/twitterReader.js');
 
 // twitter link examples:

@@ -3,23 +3,17 @@ var config = require('./config.js');
 //var twitterReader = require('./plugins/twitterReader.js');
 
 var fs = require('fs');
-var models = [];
+var plugins = [];
 
 
 
 var loadPlugins = function(){
 
     fs.readdir("./plugins/",function(err, files) {
-        //For the sake of the example, output the files in ./models/
-        console.log(files);
-
-        //Add everything to the models array.
+        //Add everything to the plugins array.
         files.forEach(function(element){
-            models.push(require("./plugins/" + element));
+            plugins.push(require("./plugins/" + element));
         });
-
-        //Profit!
-        console.log(models);
     });
 };
 exports.loadPlugins = loadPlugins;
@@ -29,6 +23,8 @@ var client = new ircLib.Client(config.ircServer, config.botName, {
         channels: [config.ircChannel]
 });
 
+loadPlugins();
+
 client.addListener('registered', function (message) {
         console.log('registered with the server...');
 });
@@ -37,13 +33,15 @@ client.addListener('message', function (from, to, message) {
 	console.log("from: " + from);
 	console.log("to: " + to);
 	console.log("message: " + message);
-	
+
+    var plugin = findPlugin(message);
+
 	if (addressedToBot(message))
 	{
-        if (message.indexOf(models[0].pattern) != -1)
+        if (message.indexOf(plugin.pattern) != -1)
         {
-            var apiLink = models[0].getTwitterLink(message);
-            models[0].processMessage(message, apiLink, client);
+            var apiLink = plugin.getTwitterLink(message);
+            plugin.processMessage(message, apiLink, client);
         }
 	}
 });
@@ -51,11 +49,12 @@ client.addListener('message', function (from, to, message) {
 
 var findPlugin = function(message)
 {
-    for (var model in models)
+    for (var number in plugins)
     {
-        if (message.indexOf(model.pattern) > -1 )
+        if (message.indexOf(plugins[number].pattern) > -1 )
         {
-            return model;
+            //console.log('found plugin');
+            return plugins[number];
         }
     }
 };
