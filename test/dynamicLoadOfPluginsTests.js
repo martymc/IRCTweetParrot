@@ -19,10 +19,10 @@ var createTestPlugin = function()
 };
 
 
-after(function()
+/*after(function()
 {
     fs.unlink('./plugins/botPluginTest.js');
-});
+});*/
 
 
 describe('When a plugin is added to the plugins directory', function() {
@@ -32,11 +32,7 @@ describe('When a plugin is added to the plugins directory', function() {
         var plugin = ircBot.findPlugin('testPattern');
 
         assert.equal(plugin.testPlugin, 'this is the test model');
+        //removeTestPlugin();
 
-//removeTestPlugin();
-        //assert.equal(true, true);
-        //var result = twitterReader.getTwitterURLObject('https://twitter.com/notch/status/200293374132105218');
-        //assert.equal(result.path, '/1/statuses/show/200293374132105218.json');
-        //result.path.should.equal('/1/statuses/show/200293374132105218.json');
     });
 });

@@ -53,7 +53,7 @@ var findPlugin = function(message)
     {
         if (message.indexOf(plugins[number].pattern) > -1 )
         {
-            //console.log('found plugin');
+            console.log('found plugin');
             return plugins[number];
         }
     }
