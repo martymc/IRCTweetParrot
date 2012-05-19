@@ -1,5 +1,6 @@
 var ircLib = require('irc');
 var config = require('./config.js');
+var nickDataStorage = require('./db/nickDataStorage.js');
 //var twitterReader = require('./plugins/twitterReader.js');
 
 var fs = require('fs');
@@ -29,6 +30,7 @@ client.addListener('registered', function (message) {
         console.log('registered with the server...');
 });
 
+
 client.addListener('message', function (from, to, message) {
 	console.log("from: " + from);
 	console.log("to: " + to);
@@ -38,11 +40,19 @@ client.addListener('message', function (from, to, message) {
 
 	if (addressedToBot(message))
 	{
+
         if (message.indexOf(plugin.pattern) != -1)
         {
-            var apiLink = plugin.getTwitterLink(message);
-            plugin.processMessage(message, apiLink, client);
+            plugin.increaseKarma('testNick');
+
+            plugin.displayKarma('testNick', client);
         }
+
+//        if (message.indexOf(plugin.pattern) != -1)
+//        {
+//            var apiLink = plugin.getTwitterLink(message);
+//            plugin.processMessage(message, apiLink, client);
+//        }
 	}
 });
 
@@ -69,9 +79,8 @@ var addressedToBot = function (message)
 exports.addressedToBot = addressedToBot;
 
 
-
 //don't die on exceptions..
 process.on('uncaughtException', function(err) {
-  console.log(err);
+  console.log(err.message);
 });
 

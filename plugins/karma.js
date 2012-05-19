@@ -1,46 +1,43 @@
-var redis = require('redis');
+var nano = require('nano')('http://192.168.0.15:5984');
+var parrot = nano.use('parrot');
+var config = require('./../config.js');
 
-var redisClient = redis.createClient();
+exports.pattern = 'karma';
 
-var handleMessage = function(message) {
-
+var saveNickData = function(nick, data)
+{
+    parrot.insert(data, nick);
 };
+exports.saveNickData = saveNickData;
 
-var increaseKarma = function(nick) {
-    var karma = redisClient.get(nick);
-    if (karma)
-    {
-        redisClient.set(nick, karma++);
-    }
-    else
-    {
-        redisClient.set(nick, 1);
-    }
 
+var increaseKarma = function(nick)
+{
+    parrot.get(nick, function(err, body){
+        body.karma++;
+        parrot.insert(body, nick);
+    });
 };
 exports.increaseKarma = increaseKarma;
 
-
-increaseKarma('test');
-redisClient.get('test', redis.print);
-
-var getKarma = function(nick){
-  return redisClient.get(nick, function (err, reply) {
-      console.log('twice' + reply.toString())
-  });
+var displayKarma = function(nick, client)
+{
+    parrot.get(nick, function(err, body){
+       client.say(config.ircChannel, body.karma);
+    });
 };
+exports.displayKarma = displayKarma;
 
-exports.getKarma = getKarma;
+var displayNickData = function(nick, client)
+{
+    parrot.get(nick, function(err, body){
+        console.log('karma = ', body.karma);
+        console.log(config.ircChannel);
+        client.say(config.ircChannel, body.karma);
+    });
+};
+exports.displayNickData = displayNickData;
 
-redisClient.on('error', function(err) {
-   console.log('Error' + err);
-});
 
 
-//redisClient.quit();
-
-//client.set("Boob", "lala");
-
-
-//client.get("Boob", redis.print);
 
