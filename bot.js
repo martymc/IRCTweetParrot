@@ -38,21 +38,30 @@ client.addListener('message', function (from, to, message) {
 
     var plugin = findPlugin(message);
 
+
+    lastSeenUpdate(from);
+
 	if (addressedToBot(message))
 	{
+//        if (message.indexOf(plugin.pattern) != -1)
+//        {
+//            plugin.increaseKarma('testNick');
+//
+//            plugin.displayKarma('testNick', client);
+//        }
+
+        if(message.indexOf('seen') != -1)
+        {
+            var regex = '[^ ]*$';
+            var nick = message.match(/[^ ]*$/);
+            nickDataStorage.getLastSeen(nick, client);
+        }
 
         if (message.indexOf(plugin.pattern) != -1)
         {
-            plugin.increaseKarma('testNick');
-
-            plugin.displayKarma('testNick', client);
+            var apiLink = plugin.getTwitterLink(message);
+            plugin.processMessage(message, apiLink, client);
         }
-
-//        if (message.indexOf(plugin.pattern) != -1)
-//        {
-//            var apiLink = plugin.getTwitterLink(message);
-//            plugin.processMessage(message, apiLink, client);
-//        }
 	}
 });
 
@@ -71,12 +80,19 @@ exports.findPlugin = findPlugin;
 
 var addressedToBot = function (message)
 {
-	if (message.substring(0, config.botName.length) == config.botName)
-	{
+    var reg = new RegExp('^' + config.botName + ':', 'g');
+    if (message.match(reg))
+    {
 		return true;
 	}
 };
 exports.addressedToBot = addressedToBot;
+
+var lastSeenUpdate = function(from)
+{
+    nickDataStorage.updateSeen(from);
+};
+exports.lastSeenUpdate = lastSeenUpdate;
 
 
 //don't die on exceptions..

@@ -3,6 +3,7 @@ var parrot = nano.use('parrot');
 var config = require('./../config.js');
 
 exports.pattern = 'karma';
+//, '++', '--' };
 
 var saveNickData = function(nick, data)
 {
