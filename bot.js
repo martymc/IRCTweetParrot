@@ -52,9 +52,9 @@ client.addListener('message', function (from, to, message) {
 
         if(message.indexOf('seen') != -1)
         {
-            var regex = '[^ ]*$';
-            var nick = message.match(/[^ ]*$/);
-            nickDataStorage.getLastSeen(nick, client);
+            var regex = new RegExp('[^ ]*$');
+            var nick = message.match(regex);
+            nickDataStorage.getLastSeen(nick[0], client);
         }
 
         if (message.indexOf(plugin.pattern) != -1)
