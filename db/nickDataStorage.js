@@ -1,7 +1,6 @@
-var nano = require('nano')('http://192.168.0.15:5984');
-var db = nano.use('parrot');
 var config = require('./../config.js');
-
+var nano = require('nano')(config.couchDBServer);
+var db = nano.use(config.couchDBDataBase);
 
 var saveNickData = function(nick, data)
 {
