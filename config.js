@@ -4,7 +4,11 @@ var config = {
     ircChannel: '#testParrot',
     botName: 'parrot',
     couchDBServer: 'http://192.168.0.15:5984',
-    couchDBDataBase: 'parrot'
+    couchDBDataBase: 'parrot',
+    twitterConsumerKey: '',
+    twitterConsumerSecret: '',
+    twitterAccessToken: '',
+    twitterAccessTokenSecret: ''
 };
 
 

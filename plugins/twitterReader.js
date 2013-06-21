@@ -1,6 +1,7 @@
 var url = require('url');
 var config = require('./../config.js');
 var http = require('http');
+var OAuth = require('oauth');
 
 exports.pattern = 'twitter.com';
 
@@ -37,27 +38,46 @@ var getTwitterURLObject = function (twitterLink)
     var id = undefined;
     if (twitterURL.path.length > 1)
     {
-        id = twitterURL.path.substring(twitterURL.path.lastIndexOf('/'), twitterURL.path.length);
+        id = twitterURL.path.substring(twitterURL.path.lastIndexOf('/')+1, twitterURL.path.length);
     }
     else
     {
         //we've probably got a #! link
-        id = twitterURL.hash.substring(twitterURL.hash.lastIndexOf('/'), twitterURL.hash.length);
+        id = twitterURL.hash.substring(twitterURL.hash.lastIndexOf('/')+1, twitterURL.hash.length);
     }
 
     //generate link
-    var options = {
-        host:  'api.twitter.com',
-        port: twitterURL.port,
-        path: '/1/statuses/show' + id + '.json'
-    };
 
-    return (options);
+    var twitterURL = 'https://api.twitter.com/1.1/statuses/show.json?id=' + id ;
+    return (twitterURL);
 };
 exports.getTwitterURLObject = getTwitterURLObject;
 
-var processMessage = function (message, options, client)
+
+var processMessage = function (message, twitterURL, client)
 {
+    var oauth = new OAuth.OAuth(
+        'https://api.twitter.com/oauth/request_token',
+        'https://api.twitter.com/oauth/access_token',
+        config.twitterConsumerKey,
+        config.twitterConsumerSecret,
+        '1.0A',
+        null,
+        'HMAC-SHA1'
+    );
+    oauth.get(twitterURL,
+        config.twitterAccessToken, //test user token
+        config.twitterAccessTokenSecret, //test user secret
+
+        function (e, data, res){
+            if (e) console.error(e);
+            var tweet = JSON.parse(data);
+            //console.log(tweet);
+            client.say(config.ircChannel, 'Tweet from: ' + tweet.user.screen_name);
+            client.say(config.ircChannel, tweet.text);
+        });
+
+
     var request = http.get(options, function(res) {
         var data = '';
 
