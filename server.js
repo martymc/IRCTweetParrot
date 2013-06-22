@@ -77,9 +77,9 @@ var getTwitterURLObject = function (twitterLink)
     }
 
 
-    var twitterURL = 'https://api.twitter.com/1.1/statuses/show.json?id=' + id ;
+    var twitterAPIURL = 'https://api.twitter.com/1.1/statuses/show.json?id=' + id ;
 
-	return (twitterURL);
+	return (twitterAPIURL);
 };
 exports.getTwitterURLObject = getTwitterURLObject;
 
