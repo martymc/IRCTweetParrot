@@ -8,13 +8,22 @@ To install IRCTweetParrots dependencies use:
 
 	npm install
 
+#### Twitter OAUth
+To use the twitter 1.1 API you need to get the OAuth access details by registering your application with twitter
+https://dev.twitter.com/
+
 #### Edit Configuration
 In server.js edit the following lines to setup your connection:
+
 
 	var config = {
 	        ircServer: 'irc.mibbit.net',
 	        ircChannel: '#parrotTest',
-	        botName: 'parrot'
+	        botName: 'parrot',
+	        twitterConsumerKey: '',
+            twitterConsumerSecret: '',
+            twitterAccessToken: '',
+            twitterAccessTokenSecret: ''
 	};
 	
 #### To run the bot
