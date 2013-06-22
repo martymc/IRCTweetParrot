@@ -18,11 +18,11 @@ In config.js edit the following lines to setup your connection:
 	var config = {
 	        ircServer: 'irc.mibbit.net',
 	        ircChannel: '#parrotTest',
-	        botName: 'parrot',
+	        botName: 'parrot'
 	        twitterConsumerKey: '',
-            	twitterConsumerSecret: '',
-            	twitterAccessToken: '',
-            	twitterAccessTokenSecret: ''
+	        twitterConsumerSecret: '',
+	        twitterAccessToken: '',
+	        twitterAccessTokenSecret: ''
 	};
 	
 #### To run the bot
