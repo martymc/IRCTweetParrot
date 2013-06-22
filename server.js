@@ -68,12 +68,12 @@ var getTwitterURLObject = function (twitterLink)
     var id = undefined;
     if (twitterURL.path.length > 1)
     {
-	    id = twitterURL.path.substring(twitterURL.path.lastIndexOf('/'), twitterURL.path.length);
+	    id = twitterURL.path.substring(twitterURL.path.lastIndexOf('/')+1, twitterURL.path.length);
     }
     else
     {
         //we've probably got a #! link
-        id = twitterURL.hash.substring(twitterURL.hash.lastIndexOf('/'), twitterURL.hash.length);
+        id = twitterURL.hash.substring(twitterURL.hash.lastIndexOf('/')+1, twitterURL.hash.length);
     }
 
 
@@ -83,7 +83,7 @@ var getTwitterURLObject = function (twitterLink)
 };
 exports.getTwitterURLObject = getTwitterURLObject;
 
-var processMessage = function (message, options)
+var processMessage = function (message, twitterURL)
 {
     var oauth = new OAuth.OAuth(
         'https://api.twitter.com/oauth/request_token',
