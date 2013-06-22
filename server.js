@@ -1,12 +1,16 @@
 var ircLib = require('irc');
 var http = require('http');
 var url = require('url');
-
+var OAuth = require('oauth');
 
 var config = {
 	ircServer: 'irc.mibbit.net',
 	ircChannel: '#testParrot',
-	botName: 'parrot'
+	botName: 'parrot',
+    twitterConsumerKey: '',
+    twitterConsumerSecret: '',
+    twitterAccessToken: '',
+    twitterAccessTokenSecret: ''
 };
 
 var client = new ircLib.Client(config.ircServer, config.botName, {
@@ -72,34 +76,35 @@ var getTwitterURLObject = function (twitterLink)
         id = twitterURL.hash.substring(twitterURL.hash.lastIndexOf('/'), twitterURL.hash.length);
     }
 
-	//generate link
-	var options = {
-		host:  'api.twitter.com',
-		port: twitterURL.port,
-		path: '/1/statuses/show' + id + '.json'
-	};
-	
-	return (options);
+
+    var twitterURL = 'https://api.twitter.com/1.1/statuses/show.json?id=' + id ;
+
+	return (twitterURL);
 };
 exports.getTwitterURLObject = getTwitterURLObject;
 
 var processMessage = function (message, options)
 {
-		var request = http.get(options, function(res) {
-			var data = '';
-			
-			res.on('data', function(chunk) {
-				data += chunk;
-			});
+    var oauth = new OAuth.OAuth(
+        'https://api.twitter.com/oauth/request_token',
+        'https://api.twitter.com/oauth/access_token',
+        config.twitterConsumerKey,
+        config.twitterConsumerSecret,
+        '1.0A',
+        null,
+        'HMAC-SHA1'
+    );
+    oauth.get(twitterURL,
+        config.twitterAccessToken, //test user token
+        config.twitterAccessTokenSecret, //test user secret
 
-			res.on('end', function() {
-				var tweet = JSON.parse(data);
-				//console.log(tweet);
-				client.say(config.ircChannel, 'Tweet from: ' + tweet.user.screen_name);
-				client.say(config.ircChannel, tweet.text);
-			});
-
-		});
+        function (e, data, res){
+            if (e) console.error(e);
+            var tweet = JSON.parse(data);
+            //console.log(tweet);
+            client.say(config.ircChannel, 'Tweet from: ' + tweet.user.screen_name);
+            client.say(config.ircChannel, tweet.text);
+        });
 };
 exports.processMessage = processMessage;
 

@@ -3,7 +3,8 @@
 	"version": "0.0.1",
 	"dependencies": 
 	{
-		"irc": "0.3.4"
+		"irc": "0.3.4",
+        "oauth": "0.9.10"
 	},
 	"engines": 
 	{
