@@ -76,22 +76,5 @@ var processMessage = function (message, twitterURL, client)
             client.say(config.ircChannel, 'Tweet from: ' + tweet.user.screen_name);
             client.say(config.ircChannel, tweet.text);
         });
-
-
-    var request = http.get(options, function(res) {
-        var data = '';
-
-        res.on('data', function(chunk) {
-            data += chunk;
-        });
-
-        res.on('end', function() {
-            var tweet = JSON.parse(data);
-            //console.log(tweet);
-            client.say(config.ircChannel, 'Tweet from: ' + tweet.user.screen_name);
-            client.say(config.ircChannel, tweet.text);
-        });
-
-    });
 };
 exports.processMessage = processMessage;
