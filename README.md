@@ -31,7 +31,7 @@ In server.js edit the following lines to setup your connection:
 	
 #### To run the tests
 
-The tests are written in [Mocha](http://visionmedia.github.com/mocha/)
+The tests are written in [Mocha](https://mochajs.org/)
 
 To install (system wide)
 
